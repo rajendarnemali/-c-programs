@@ -1,0 +1,234 @@
+ completed programs
+
+1.1.	Given an array of integers, find the maximum difference between any two elements in the array.
+ program:
+#include <stdio.h>
+
+int maxDiff(int arr[], int n) {
+    if (n < 2) {
+        printf("Array must contain at least two elements\n");
+        return -1; // return -1 for error
+    }
+
+    int minElement = arr[0];
+    int maxElement = arr[0];
+
+    // Find the minimum and maximum elements in the array
+    for (int i = 1; i < n; i++) {
+        if (arr[i] < minElement) {
+            minElement = arr[i];
+        }
+        if (arr[i] > maxElement) {
+            maxElement = arr[i];
+        }
+    }
+
+    // Calculate the maximum difference
+    int maxDifference = maxElement - minElement;
+
+    return maxDifference;
+}
+
+int main() {
+    int arr[] = {7, 1, 5, 3, 6, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int maxDifference = maxDiff(arr, n);
+    if (maxDifference != -1) {
+        printf("Maximum difference between any two elements: %d\n", maxDifference);
+    }
+return 0;
+
+}
+
+2.2.	Given an array of integers, find the longest increasing subarray.
+program:
+include <stdio.h>
+
+
+void longestIncreasingSubarray(int arr[], int n) {
+    int maxLength = 1; 
+    int maxIndex = 0;  
+    int currentLength = 1; 
+    int currentIndex = 0;  
+
+    
+    for (int i = 1; i < n; i++) {
+        
+        if (arr[i] > arr[i - 1]) {
+            currentLength++; 
+        } else {
+           
+            
+            if (currentLength > maxLength) {
+                maxIndex = currentIndex;
+            }
+            
+            currentLength = 1;
+            currentIndex = i;
+                maxLength = currentLength;
+        }
+    }
+
+    
+    if (currentLength > maxLength) {
+        maxLength = currentLength;
+        maxIndex = currentIndex;
+    }
+
+
+    printf("Longest increasing subarray is: ");
+    for (int i = maxIndex - maxLength + 1; i <= maxIndex; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\nLength of longest increasing subarray: %d\n", maxLength);
+}
+
+int main() {
+    int arr[] = {5, 6, 3, 5, 7, 8, 9, 1, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    longestIncreasingSubarray(arr, n);
+
+    return 0;
+}
+
+
+3.	Given two arrays of integers, find the common elements between them.
+program:
+#include <stdio.h>
+
+void findCommonElements(int arr1[], int arr2[], int size1, int size2) {
+    int i = 0, j = 0;
+
+    printf("Common elements: ");
+
+    // Traverse both arrays simultaneously
+    while (i < size1 && j < size2) {
+        // If the current elements in both arrays are equal
+        if (arr1[i] == arr2[j]) {
+            printf("%d ", arr1[i]);
+            i++;
+            j++;
+        }
+        // If the current element in the first array is smaller
+        else if (arr1[i] < arr2[j]) {
+            i++;
+        }
+        // If the current element in the second array is smaller
+        else {
+            j++;
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr1[] = {1, 3, 4, 6, 7};
+    int arr2[] = {1, 2, 4, 5, 6};
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+
+    findCommonElements(arr1, arr2, size1, size2);
+
+    return 0;
+}
+4.	Given an array of integers, find the element that appears more than n/2 times (where n is the size of the array).
+program:
+#include <stdio.h>
+
+int findMajorityElement(int arr[], int n) {
+    int candidate = arr[0]; // Initialize the candidate majority element
+    int count = 1; // Initialize count of the candidate element
+
+    // Find the majority element candidate
+    for (int i = 1; i < n; i++) {
+        if (arr[i] == candidate) {
+            count++;
+        } else {
+            count--;
+        }
+
+        if (count == 0) {
+            candidate = arr[i];
+            count = 1;
+        }
+    }
+
+    // Verify if the candidate is the majority element
+    count = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == candidate) {
+            count++;
+        }
+    }
+
+    if (count > n / 2) {
+        return candidate;
+    } else {
+        return -1; // No majority element found
+    }
+}
+
+int main() {
+    int arr[] = {3, 3, 4, 2, 4, 4, 2, 4, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int majorityElement = findMajorityElement(arr, n);
+    if (majorityElement != -1) {
+        printf("Majority Element: %d\n", majorityElement);
+    } else {
+        printf("No majority element found\n");
+    }
+
+    return 0;
+}
+
+5.	Given an array of integers, rearrange the elements in such a way that all the negative elements come before the positive elements.
+include <stdio.h>
+
+void rearrangeArray(int arr[], int n) {
+    int left = 0; // Left pointer for negative elements
+    int right = n - 1; // Right pointer for positive elements
+
+    while (left <= right) {
+        // If the element at left pointer is negative, move to the next element
+        if (arr[left] < 0) {
+            left++;
+        }
+        // If the element at right pointer is positive, move to the previous element
+        else if (arr[right] >= 0) {
+            right--;
+        }
+        // If the element at left pointer is positive and the element at right pointer is negative, swap them
+        else {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}
+
+int main() {
+    int arr[] = {-12, 11, -13, -5, 6, -7, 5, -3, -6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    rearrangeArray(arr, n);
+
+    printf("Rearranged Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
