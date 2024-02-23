@@ -1,0 +1,230 @@
+6.	Given an array of integers, find the majority element (an element that appears more than n/2 times, where n is the size of the array) if it exists.
+program:
+#include <stdio.h>
+
+int findMajorityElement(int arr[], int n) {
+    int candidate = arr[0]; // Initialize the candidate majority element
+    int count = 1; // Initialize count of the candidate element
+
+    // Find the majority element candidate
+    for (int i = 1; i < n; i++) {
+        if (arr[i] == candidate) {
+            count++;
+        } else {
+            count--;
+        }
+
+        if (count == 0) {
+            candidate = arr[i];
+            count = 1;
+        }
+    }
+
+    // Verify if the candidate is the majority element
+    count = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == candidate) {
+            count++;
+        }
+    }
+
+    if (count > n / 2) {
+        return candidate;
+    } else {
+        return -1; // No majority element found
+    }
+}
+
+int main() {
+    int arr[] = {3, 3, 4, 2, 4, 4, 2, 4, 4};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int majorityElement = findMajorityElement(arr, n);
+    if (majorityElement != -1) {
+        printf("Majority Element: %d\n", majorityElement);
+    } else {
+        printf("No majority element found\n");
+    }
+
+    return 0;
+}
+7.	Given an array of integers, find the subarray with the largest sum.
+program:
+#include <stdio.h>
+
+// Function to find the subarray with the largest sum
+int maxSubarraySum(int arr[], int n) {
+    int maxEndingHere = arr[0]; // Initialize maxEndingHere to the first element
+    int maxSoFar = arr[0]; // Initialize maxSoFar to the first element
+
+    // Traverse the array starting from the second element
+    for (int i = 1; i < n; i++) {
+        // Update maxEndingHere to the maximum of (current element, current element + maxEndingHere)
+        maxEndingHere = (arr[i] > arr[i] + maxEndingHere) ? arr[i] : arr[i] + maxEndingHere;
+
+        // Update maxSoFar to the maximum of (maxSoFar, maxEndingHere)
+        maxSoFar = (maxSoFar > maxEndingHere) ? maxSoFar : maxEndingHere;
+    }
+
+    return maxSoFar;
+}
+
+int main() {
+    int arr[] = {-2, -3, 4, -1, -2, 1, 5, -3};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    int maxSum = maxSubarraySum(arr, n);
+    printf("Maximum subarray sum: %d\n", maxSum);
+
+    return 0;
+}
+8.	Given an array of integers, rotate the array by k positions to the right.
+#include <stdio.h>
+
+// Function to reverse the elements in the array from start to end indices
+void reverse(int arr[], int start, int end) {
+    while (start < end) {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+// Function to rotate the array by k positions to the right
+void rotateArray(int arr[], int n, int k) {
+    // Handle cases where k is greater than n
+    k = k % n;
+
+    // Reverse the entire array
+    reverse(arr, 0, n - 1);
+
+    // Reverse the first k elements
+    reverse(arr, 0, k - 1);
+
+    // Reverse the remaining elements
+    reverse(arr, k, n - 1);
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int k = 2; // Number of positions to rotate
+
+    printf("Original array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    rotateArray(arr, n, k);
+
+    printf("Rotated array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+9.	Given an array of integers, rearrange the array in such a way that all the even elements come before the odd elements.
+program:
+#include <stdio.h>
+
+// Function to swap two integers
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Function to rearrange the array such that even elements come before odd elements
+void rearrangeArray(int arr[], int n) {
+    int left = 0; // Pointer for even elements
+
+    // Traverse the array
+    for (int i = 0; i < n; i++) {
+        // If the current element is even, swap it with the element at the left pointer
+        if (arr[i] % 2 == 0) {
+            swap(&arr[left], &arr[i]);
+            left++; // Move the left pointer forward
+        }
+    }
+}
+
+int main() {
+    int arr[] = {3, 5, 2, 8, 10, 4, 7, 6};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    rearrangeArray(arr, n);
+
+    printf("Rearranged Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+10.	Given an array of integers, find the longest subarray with equal number of 0s and 1s.
+program:
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void longestSubarrayWithEqualZerosAndOnes(int arr[], int n) {
+   
+    int *hashmap = (int *)malloc(sizeof(int) * (2 * n + 1));
+    for (int i = 0; i < 2 * n + 1; i++) {
+        hashmap[i] = -2;
+    }
+
+    int maxLength = 0; 
+    int endIndex = -1; 
+
+    int sum = 0; 
+    hashmap[n] = -1;
+
+    for (int i = 0; i < n; i++) {
+        
+        sum += (arr[i] == 0) ? -1 : 1;
+
+        
+        if (hashmap[sum + n] >= -1) {
+            int length = i - hashmap[sum + n];
+            if (length > maxLength) {
+                maxLength = length;
+                endIndex = i;
+            }
+        } else {
+            hashmap[sum + n] = i;
+        }
+    }
+
+   
+    if (endIndex != -1) {
+        printf("Longest subarray with equal number of 0s and 1s is from index %d to %d.\n", endIndex - maxLength + 1, endIndex);
+    } else {
+        printf("No subarray found with equal number of 0s and 1s.\n");
+    }
+
+    
+    free(hashmap);
+}
+
+int main() {
+    int arr[] = {0, 0, 1, 0, 1, 0, 0};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    longestSubarrayWithEqualZerosAndOnes(arr, n);
+
+    return 0;
+}
+
