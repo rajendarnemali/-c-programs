@@ -1,0 +1,95 @@
+6.	Find the Number of Integers Divisible by 5.
+program:
+#include <stdio.h>
+ 
+void main()
+{
+    int i, num1, num2, count = 0, sum = 0;
+ 
+    printf("Enter the value of num1 and num2 \n");
+    scanf("%d %d", &num1, &num2);
+    /* Count the number and compute their sum*/
+    printf("Integers divisible by 5 are \n");
+    for (i = num1; i < num2; i++)
+    {
+        if (i % 5 == 0)
+        {
+            printf("%3d,", i);
+            count++;
+            sum = sum + i;
+        }
+    }
+    printf("\n Number of integers divisible by 5 between %d and %d =
+ %d\n", num1, num2, count);
+    printf("Sum of all integers that are divisible by 5 = %d\n", sum);
+}
+7.	Check if Two Numbers are Equal.
+program:
+#include <stdio.h>
+int main() {
+    int num1, num2;
+    printf("Enter First Number: ");
+    scanf("%d", &num1);
+    printf("Enter Second Number: ");
+    scanf("%d", &num2);
+    if (num1 == num2) {
+        printf("Both numbers are equal.");
+    } else {
+        printf("Numbers are not equal");
+    }
+    return 0;
+}
+8.	Sum of Digits .
+program:
+#include<stdio.h>  
+ int main()    
+{    
+int n,sum=0,m;    
+printf("Enter a number:");    
+scanf("%d",&n);    
+while(n>0)    
+{    
+m=n%10;    
+sum=sum+m;    
+n=n/10;    
+}    
+printf("Sum is=%d",sum);    
+return 0;  
+}   
+
+9.	Increment by 1 to all the Digits of a Given Integer.
+program:
+#include <stdio.h>
+ 
+int main()
+{
+    int number, sum = 0, remainder, count;
+ 
+    printf("Enter a number: ");
+    scanf("%d", &number);
+    while (number)
+    {
+        remainder = number % 10;
+        sum  = sum + (remainder + 1);
+        number /= 10;
+    }
+    printf("increasing 1 to all digits:  %d", sum);
+    return 0;
+}
+10.	Multiplication Table.
+program:
+#include <stdio.h>
+int main() {
+  int n;
+  printf("Enter an integer: ");
+  scanf("%d", &n);
+
+  for (int i = 1; i <= 10; ++i) {
+    printf("%d * %d = %d \n", n, i, n * i);
+  }
+  return 0;
+}
+
+
+
+
